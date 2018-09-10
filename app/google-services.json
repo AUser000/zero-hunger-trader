@@ -1,0 +1,183 @@
+{
+  "project_info": {
+    "project_number": "352997139200",
+    "firebase_url": "https://project-zero-hunger.firebaseio.com",
+    "project_id": "project-zero-hunger",
+    "storage_bucket": "project-zero-hunger.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352997139200:android:dcbc7d6e1e337560",
+        "android_client_info": {
+          "package_name": "com.example.foodprojectdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352997139200-r1gbppsp6t5ik3uhk18i9qttjsm7fapd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodprojectdemo",
+            "certificate_hash": "3c01fb65b392595e7b49e7d5caf62c3df0fefa12"
+          }
+        },
+        {
+          "client_id": "352997139200-97sdil9l5tuksc2us574kijggah46rms.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodprojectdemo",
+            "certificate_hash": "38602dcb063e8cc0d97802d1d130dd9622d57aca"
+          }
+        },
+        {
+          "client_id": "352997139200-toso0u5no8ur22jjecm8k50riddfqbp3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodprojectdemo",
+            "certificate_hash": "415bc35089ecd6ee0a30bdaf96f71cbfd7dec9ba"
+          }
+        },
+        {
+          "client_id": "352997139200-qqidrrhcs6qua3oj864608nijod0qpnv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodprojectdemo",
+            "certificate_hash": "579cb553f76befaf04ad8c7ba6a9dc87d4ef9696"
+          }
+        },
+        {
+          "client_id": "352997139200-rqpv0qf7p0c33om65840bmn1jqug255l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCAB3cX2r7Lcps6enRdbAfXcfsZJ3ivxI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352997139200-rqpv0qf7p0c33om65840bmn1jqug255l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352997139200:android:373cc2cb26191c58",
+        "android_client_info": {
+          "package_name": "com.zerohunger.zerohungerclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352997139200-iuhe9qqufgk8elsqu4lia1mu4011fdlb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zerohunger.zerohungerclient",
+            "certificate_hash": "579cb553f76befaf04ad8c7ba6a9dc87d4ef9696"
+          }
+        },
+        {
+          "client_id": "352997139200-lrblelgsfcj0r7i1oud7jh273sgirdrv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zerohunger.zerohungerclient",
+            "certificate_hash": "38602dcb063e8cc0d97802d1d130dd9622d57aca"
+          }
+        },
+        {
+          "client_id": "352997139200-maevsj2ilbjpcsg0hlco39l4g0nmktbl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zerohunger.zerohungerclient",
+            "certificate_hash": "415bc35089ecd6ee0a30bdaf96f71cbfd7dec9ba"
+          }
+        },
+        {
+          "client_id": "352997139200-rqpv0qf7p0c33om65840bmn1jqug255l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCAB3cX2r7Lcps6enRdbAfXcfsZJ3ivxI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352997139200-rqpv0qf7p0c33om65840bmn1jqug255l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352997139200:android:bf13cfa92458f3f3",
+        "android_client_info": {
+          "package_name": "com.zerohunger.zerohungertrader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352997139200-ipe8c8af0889mfg2rnhka6a2jlhnuoao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zerohunger.zerohungertrader",
+            "certificate_hash": "415bc35089ecd6ee0a30bdaf96f71cbfd7dec9ba"
+          }
+        },
+        {
+          "client_id": "352997139200-rqpv0qf7p0c33om65840bmn1jqug255l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCAB3cX2r7Lcps6enRdbAfXcfsZJ3ivxI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352997139200-rqpv0qf7p0c33om65840bmn1jqug255l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
