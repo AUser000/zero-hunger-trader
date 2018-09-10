@@ -20,13 +20,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="PhoneNumberActivity"
+            android:name=".PhoneNumberActivity"
             android:label="@string/label_phone_number"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="RegisterActivity"
+            android:name=".RegisterActivity"
             android:label="@string/label_register"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".AddNewItemActivity"></activity>
     </application>
 
 </manifest>
