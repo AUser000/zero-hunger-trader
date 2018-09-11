@@ -11,11 +11,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.zerohunger.zerohungertrader.model.Inventory;
 import com.zerohunger.zerohungertrader.model.SpinnerItem;
 
 import java.util.ArrayList;
@@ -23,16 +25,19 @@ import java.util.ArrayList;
 public class AddNewItemActivity extends AppCompatActivity {
 
     ArrayList<SpinnerItem> spinnerItems;
-    String spinnerSelectedItemKey;
+    String itemId;
+    String traderId;
     Spinner spinner;
     TextView priceText;
     TextView qutText;
     Button locationBtn;
-
+    Button addBtn;
+    double lat = 0.0;
+    double lng = 0.0;
+    Intent i;
 
     int price;
     int qut;
-    //Lat lat;
 
 
     FirebaseDatabase firebaseDatabase;
@@ -42,55 +47,81 @@ public class AddNewItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_item);
-
-        initUi();
-
         initFirebase();
 
+
+        spinner = findViewById(R.id.inventoryItemSpinner);
+        priceText = findViewById(R.id.inventoryPriceText);
+        qutText = findViewById(R.id.inventoryQuantityText);
+        locationBtn = findViewById(R.id.locationBtn);
+        addBtn = findViewById(R.id.inventoryAddButton);
+
+        locationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                i = new Intent(AddNewItemActivity.this, MapsActivity.class);
+                startActivityForResult(i ,1);
+            }
+        });
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(validateUiData()) {
+                    gatherUiData();
+                    sumbitDataToFirebase();
+                    clearUi();
+                } else {
+                    // Do nothing
+                }
+            }
+        });
+
+
         getFirebaseItemData();
-
-        //updateSpinner();
-
-        gatherUiData();
-
         collectLocationData();
-
-        clearUi();
-
-        //validateUiData();
-
-        if(validateUiData()) {
-            sumbitDataToFirebase();
-        } else {
-            // Do nothing
-        }
     }
 
     private void gatherUiData() {
         getItemKey();
         getPrice();
         getQut();
-
     }
 
-    private void initUi() {
-        spinner = findViewById(R.id.inventoryItemSpinner);
-        priceText = findViewById(R.id.inventoryPriceText);
-        qutText = findViewById(R.id.inventoryQuantityText);
-        locationBtn = findViewById(R.id.locationBtn);
-
-        locationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(AddNewItemActivity.this, MapsActivity.class);
-                startActivity(i);
+    // UI data gathering =================== //
+    private void getItemKey() {
+        itemId = (String)spinner.getSelectedItem();
+        for (SpinnerItem spinnerItem : spinnerItems) {
+            if(spinnerItem.getItemName().equals(itemId)) {
+                itemId = spinnerItem.getKey();
             }
-        });
+        }
     }
+
+    private void getPrice() {
+        try {
+            price =  Integer.parseInt(priceText.getText().toString());
+        } catch (NumberFormatException e) {
+            Toast.makeText(AddNewItemActivity.this, "check Errors", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void getQut() {
+        try {
+            qut = Integer.parseInt(qutText.getText().toString());
+        } catch (NumberFormatException e) {
+            Toast.makeText(AddNewItemActivity.this, "check Errors", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     // validate UI data ================== //
     private boolean validateUiData() {
         boolean valid = false;
+        if( lat != 0.0 && lng != 0.0 ){
+            valid = true;
+        }
 
         return valid;
     }
@@ -99,6 +130,7 @@ public class AddNewItemActivity extends AppCompatActivity {
     private void initFirebase() {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
+        traderId = FirebaseAuth.getInstance().getUid();
     }
 
     private void updateSpinner() {
@@ -145,32 +177,6 @@ public class AddNewItemActivity extends AppCompatActivity {
     }
 
 
-    // UI data gathering =================== //
-    private void getItemKey() {
-        String spinnerSelectedItem = (String)spinner.getSelectedItem();
-        for (SpinnerItem spinnerItem : spinnerItems) {
-            if(spinnerItem.getItemName().equals(spinnerSelectedItem)) {
-                spinnerSelectedItemKey = spinnerItem.getKey();
-            }
-        }
-    }
-
-    private void getPrice() {
-        try {
-            price =  Integer.parseInt(priceText.getText().toString());
-        } catch (NumberFormatException e) {
-            Toast.makeText(AddNewItemActivity.this, "check Errors", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    private void getQut() {
-        try {
-            qut = Integer.parseInt(qutText.getText().toString());
-        } catch (NumberFormatException e) {
-            Toast.makeText(AddNewItemActivity.this, "check Errors", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     // clear UI =========================== //
     private void clearUi() {
@@ -181,11 +187,34 @@ public class AddNewItemActivity extends AppCompatActivity {
     // read data on firebase ============== //
     private void sumbitDataToFirebase() {
         // TODO: fix this
+        System.out.println("lat" + lat);
+        System.out.println("lng" + lng);
+
+        final Long startedTime = System.currentTimeMillis() / 1000L;
+        Inventory inventory = new Inventory(
+                traderId, itemId, price, qut, startedTime, lat, lng);
+        // write into the database
+        databaseReference.child("inventory").push().setValue(inventory);
+        System.out.println(inventory.itemId);
+        System.out.println(spinner.getSelectedItem());
     }
 
 
     private void collectLocationData() {
 
+    }
+//
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                lat = (double)data.getDoubleExtra("LAT", 0.00);
+                System.out.println("lat : " + lat);
+                lng = (double)data.getDoubleExtra("LNG", 0.00);
+                System.out.println("lat : " + lng);
+            }
+        }
     }
 
 }

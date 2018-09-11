@@ -1,13 +1,18 @@
 package com.zerohunger.zerohungertrader;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -15,6 +20,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     public double lat;
     public double lng;
+
+    public Intent intent;
+    FloatingActionButton fab;
 
 
     @Override
@@ -42,8 +50,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).draggable(true).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //LatLng sydney = new LatLng(-34, 151);
+        //me.setPosition( mMap.getCenter());
+        //mMap.addMarker(new MarkerOptions().draggable(true).title("Marker in Sydney"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+            @Override
+            public void onCameraIdle() {
+                LatLng location = mMap.getCameraPosition().target;
+                MarkerOptions marker = new MarkerOptions().position(location).title("");
+                mMap.clear();
+                mMap.addMarker(marker);
+                lat = location.latitude;
+                lng = location.longitude;
+                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 16));
+            }
+        });
+
+        fab = findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent = new Intent();
+                intent.putExtra("LAT", lat);
+                intent.putExtra("LNG", lng);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
+
     }
+
+
 }
