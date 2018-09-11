@@ -16,4 +16,5 @@
     <string name="preference_user_file_key">com.zerohunger.zerohungerclient.PREFERENCE_USER_FILE_KEY</string>
     <string name="saved_profile_name">com.zerohunger.zerohungerclient.SAVED_PROFILE_NAME</string>
     <string name="saved_profile_phone_number">com.zerohunger.zerohungerclient.SAVED_PHONE_NUMBER</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
