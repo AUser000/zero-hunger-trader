@@ -1,9 +1,11 @@
 package com.zerohunger.zerohungertrader;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -12,6 +14,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -54,6 +57,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //me.setPosition( mMap.getCenter());
         //mMap.addMarker(new MarkerOptions().draggable(true).title("Marker in Sydney"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(7.75, 80.7), 8));
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+        try {
+            boolean success = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(MapsActivity.this, R.raw.style));
+            if (!success) {
+                //Log.e(TAG, "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            //Log.e(TAG, "Can't find style. Error: ", e);
+        }
+
 
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override

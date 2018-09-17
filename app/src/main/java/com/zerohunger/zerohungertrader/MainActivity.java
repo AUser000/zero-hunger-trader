@@ -2,8 +2,10 @@ package com.zerohunger.zerohungertrader;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,16 +15,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.zerohunger.zerohungertrader.adapters.OrderListAdapter;
+import com.zerohunger.zerohungertrader.model.Order;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
-
+    DatabaseReference databaseReference;
+    List<Order> orderList;
+    ListView listView;
+    String myId;
+    OrderListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +53,39 @@ public class MainActivity extends AppCompatActivity
         } else {
             // Do nothing
         }
+
+        loadDataToList();
+
+    }
+
+    private void loadDataToList() {
+
+        listView = (ListView) findViewById(R.id.order_list_view);
+        orderList = new ArrayList<>();
+
+        databaseReference.child("orders").child(myId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                orderList.clear();
+                for (DataSnapshot dataSnapShot1: dataSnapshot.getChildren()) {
+                    Order singleOrder = dataSnapShot1.getValue(Order.class);
+                    orderList.add(singleOrder);
+                }
+                adapter = new OrderListAdapter(MainActivity.this, R.layout.order_list_item_2, orderList);
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
     }
 
     private void createBaseUi() {
@@ -44,14 +93,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -69,6 +110,8 @@ public class MainActivity extends AppCompatActivity
     private void initFirebase() {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
+        databaseReference = mDatabase.getReference();
+        myId = FirebaseAuth.getInstance().getUid();
     }
     
     @Override
@@ -114,13 +157,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             Intent intent = new Intent(MainActivity.this, AddNewItemActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_slideshow) {
-
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 

@@ -184,7 +184,7 @@ public class AddNewItemActivity extends AppCompatActivity {
         qutText.setText("");
     }
 
-    // read data on firebase ============== //
+    // write data on firebase ============== //
     private void sumbitDataToFirebase() {
         // TODO: fix this
         System.out.println("lat" + lat);

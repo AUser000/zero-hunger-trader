@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void validate() {
         String firstName = textFirstName.getText().toString().trim();
         String lastName = textLastName.getText().toString().trim();
-        User user = new User(firstName, lastName, "customer");
+        User user = new User(firstName, lastName, "trader");
         String userId = FirebaseAuth.getInstance().getUid();
 
         if (userId != null) {
